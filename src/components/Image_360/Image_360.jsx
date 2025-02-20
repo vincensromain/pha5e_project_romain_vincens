@@ -1,125 +1,63 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import "./Image_360.scss";
 
+import Arrow from "../Arrow/Arrow";
+import White_btn from "../White_btn/White_btn";
+import Yellow_btn from "../Yellow_btn/Yellow_btn";
+
 function Image_360() {
   const containerRef = useRef(null);
-  const [modalInfo, setModalInfo] = useState({ open: false, content: "" });
+  const explanationTitleRef = useRef(null);
 
+  // Création et gestion de la scène 3D
   useEffect(() => {
     const container = containerRef.current;
-
-    // Création et ajout du canvas
     const canvas = document.createElement("canvas");
     canvas.className = "web-gl";
     container.appendChild(canvas);
 
-    // Scène
     const scene = new THREE.Scene();
-
-    // Caméra
-    const fov = 70;
-    const aspect = window.innerWidth / window.innerHeight;
-    const near = 0.1;
-    const far = 1000;
+    const fov = 70,
+      aspect = window.innerWidth / window.innerHeight,
+      near = 0.1,
+      far = 1000;
     const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     camera.position.set(0, 0, 0.1);
     scene.add(camera);
 
-    // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio || 1);
     renderer.setClearColor(0x000000, 1);
 
-    // OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
     controls.enablePan = false;
     controls.enableDamping = true;
-    controls.dampingFactor = 0.2;
+    controls.dampingFactor = 0.08;
     controls.rotateSpeed = 0.5;
     controls.target.set(0, 0, 0);
 
-    // Chargement de l'image 360 et création de la sphère inversée
     const loader = new THREE.TextureLoader();
-    const texture = loader.load("/360_image.jpeg");
+    const texture = loader.load("/img_360_2.jpg");
     const geometry = new THREE.SphereGeometry(500, 60, 40);
     geometry.scale(-1, 1, 1);
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const sphere = new THREE.Mesh(geometry, material);
     scene.add(sphere);
 
-    // --- Création des marqueurs en HTML ---
-
-    // On stocke les données de chaque marqueur (position en 3D, info et élément HTML)
-    const markers = [];
-
-    // Fonction utilitaire pour convertir des coordonnées sphériques (r, theta, phi)
-    // en coordonnées cartésiennes.
-    const sphericalToCartesian = (r, theta, phi) =>
-      new THREE.Vector3(
-        r * Math.sin(theta) * Math.cos(phi),
-        r * Math.cos(theta),
-        r * Math.sin(theta) * Math.sin(phi)
-      );
-
-    // Définition des données pour 3 marqueurs
-    const markerData = [
-      { theta: 1.2, phi: 0.5, info: "Infos pour le marqueur 1" },
-      { theta: 1.0, phi: -0.7, info: "Infos pour le marqueur 2" },
-      { theta: 1.5, phi: 1.2, info: "Infos pour le marqueur 3" },
-    ];
-    const markerRadius = 490; // Pour être positionné sur la paroi intérieure de la sphère
-
-    // Création des éléments HTML pour chaque marqueur
-    markerData.forEach((data) => {
-      const pos = sphericalToCartesian(markerRadius, data.theta, data.phi);
-
-      // Création d'un élément div qui servira de pastille
-      const markerEl = document.createElement("div");
-      markerEl.className = "marker";
-      // Ces styles de base (que tu pourras surcharger en SCSS) font une pastille rouge
-      markerEl.style.position = "absolute";
-      markerEl.style.width = "20px";
-      markerEl.style.height = "20px";
-      markerEl.style.borderRadius = "50%";
-      markerEl.style.backgroundColor = "red";
-      markerEl.style.cursor = "pointer";
-      // Ajout de la pastille au conteneur (elle sera positionnée au-dessus du canvas)
-      container.appendChild(markerEl);
-
-      // Écouteur pour ouvrir le modal au clic sur la pastille
-      markerEl.addEventListener("click", (e) => {
-        e.stopPropagation();
-        setModalInfo({ open: true, content: data.info });
-      });
-
-      markers.push({ position: pos, element: markerEl, info: data.info });
-    });
-
-    // --- Boucle d'animation ---
+    let animationFrameId;
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
       controls.update();
       renderer.render(scene, camera);
-
-      // Mise à jour de la position des marqueurs HTML
-      markers.forEach((marker) => {
-        // On clone la position 3D du marqueur et on la projette dans l'espace écran
-        const pos = marker.position.clone();
-        pos.project(camera);
-        const x = ((pos.x + 1) / 2) * window.innerWidth;
-        const y = ((-pos.y + 1) / 2) * window.innerHeight;
-        // Centrer la pastille (en déduisant la moitié de sa largeur/hauteur)
-        marker.element.style.left = `${x - 10}px`;
-        marker.element.style.top = `${y - 10}px`;
-      });
     };
     animate();
 
-    // Gestion du redimensionnement
     const onWindowResize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
@@ -129,33 +67,68 @@ function Image_360() {
     };
     window.addEventListener("resize", onWindowResize);
 
-    // Cleanup
     return () => {
       window.removeEventListener("resize", onWindowResize);
+      cancelAnimationFrame(animationFrameId);
       container.removeChild(canvas);
-      markers.forEach((marker) => {
-        container.removeChild(marker.element);
-      });
     };
   }, []);
 
+  // Animation initiale de explanation_title (slide de bas en haut)
+  useGSAP(() => {
+    gsap.set(".explanation_title", { y: 50 });
+    gsap.to(".explanation_title", {
+      y: 0,
+      duration: 1.2,
+      ease: "power4.inOut",
+    });
+  }, []);
+  const handleCTA = () => {
+    gsap.to(".explanation_title", {
+      y: 50,
+      duration: 1.2,
+      ease: "power4.inOut",
+    });
+
+    gsap.to(".cta_explanation", {
+      background: "#ffd657",
+    });
+
+    gsap.to(".text", {
+      color: "#1B1B1B",
+    });
+    gsap.set(".explanation", {
+      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+    });
+    gsap.to(".explanation", {
+      clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)",
+      duration: 1.2,
+      delay: 1,
+      ease: "power3.inOut",
+    });
+  };
+
   return (
-    <>
-      <section className="hero" ref={containerRef}></section>
-      {modalInfo.open && (
-        <div className="modal">
-          <div className="modal-content">
-            <span
-              className="modal-close"
-              onClick={() => setModalInfo({ open: false, content: "" })}
-            >
-              &times;
-            </span>
-            <p>{modalInfo.content}</p>
-          </div>
+    <section className="hero" ref={containerRef}>
+      <White_btn />
+      <Yellow_btn />
+      <div className="explanation">
+        <div className="explanation_info">
+          <span className="drag_anim"></span>
+          <span className="title_container">
+            <h2 className="explanation_title" ref={explanationTitleRef}>
+              Drag in 360° to navigate
+            </h2>
+          </span>
+
+          <span className="cta_explanation" onClick={handleCTA}>
+            <span className="text">got it !</span>
+            {/* <Arrow /> */}
+            <span className="arrow_dont_forget"></span>
+          </span>
         </div>
-      )}
-    </>
+      </div>
+    </section>
   );
 }
 

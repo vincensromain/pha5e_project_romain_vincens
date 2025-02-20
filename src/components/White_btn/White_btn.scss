@@ -1,0 +1,25 @@
+.btn_1_container {
+  position: absolute;
+  z-index: 3;
+  top: 349px;
+  left: 243px;
+
+  .white_btn {
+    cursor: pointer;
+    background: transparent;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: solid white 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .inside_btn {
+      height: 38.89px;
+      width: 38.89px;
+      border-radius: 50%;
+      background: white;
+    }
+  }
+}

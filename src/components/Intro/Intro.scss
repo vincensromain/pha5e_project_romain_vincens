@@ -1,0 +1,41 @@
+.intro_section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .background_intro {
+    height: 100vh;
+    width: 100vw;
+    background: url("/background_intro.png") no-repeat center center;
+    background-size: cover;
+    position: fixed;
+    top: 0;
+    z-index: -1;
+  }
+
+  .intro_nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .heading {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 327px;
+
+    .title {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      font-size: 96px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      color: #ffffff;
+    }
+  }
+}
