@@ -6,15 +6,14 @@ import "./globals.scss";
 
 import Intro from "../components/Intro/Intro";
 import Image360 from "../components/Image_360/Image_360";
+import Menu from "../components/Menu/Menu";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Router>
       <Routes>
-        {/* When the URL is "/", show Intro */}
         <Route path="/" element={<Intro />} />
-
-        {/* When the URL is "/image_360", show Image360 */}
+        <Route path="/menu" element={<Menu />} />
         <Route path="/image_360" element={<Image360 />} />
       </Routes>
     </Router>

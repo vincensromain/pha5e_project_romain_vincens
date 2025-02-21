@@ -145,7 +145,7 @@ function Intro() {
             </span>
           </div>
 
-          <Link to="/image_360" className="start_experience">
+          <Link to="/Menu" className="start_experience">
             <span className="cta_text">Entrer dans l’expérience</span>
             <span className="arrow"></span>
           </Link>
