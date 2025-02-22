@@ -1,8 +1,42 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { Observer } from "gsap/Observer";
 import "./Menu.scss";
+import { useGSAP } from "@gsap/react";
+import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
+import { motion } from "framer-motion";
+
+const slideVariants = {
+  initial: { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" },
+  animate: {
+    clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
+    transition: { duration: 0.8 },
+  },
+};
+
+const anim = (variants) => {
+  return {
+    initial: "initial",
+    animate: "animate",
+    exit: "animate",
+    variants,
+  };
+};
+
+const splitText = (text) =>
+  text.split("").map((char, index) => {
+    const displayChar = char === " " ? "\u00a0" : char;
+    return (
+      <span
+        key={index}
+        className="char"
+        style={{ display: "inline-block", position: "relative" }}
+      >
+        {displayChar}
+      </span>
+    );
+  });
 
 const sliderImages = [
   {
@@ -10,76 +44,77 @@ const sliderImages = [
     src: "/img_slider_1.png",
     alt: "slider image 1",
     name: "Le jardin",
+    infinit: "Le jardin • Le jardin • Le jardin • Le jardin • ",
+    link: "/Le_jardin",
   },
   {
     id: 2,
     src: "/img_slider_2.png",
     alt: "slider image 2",
     name: "L'usine",
+    infinit: "'usine • L'usine • L'usine • L'usine • L",
+    link: "/L_usine",
   },
   {
     id: 3,
     src: "/img_slider_3.png",
     alt: "slider image 3",
     name: "La boutique",
+    infinit: "a boutique • La boutique • La boutique • La boutique • L",
+    link: "/La_boutique",
   },
   {
     id: 4,
     src: "/img_slider_1.png",
     alt: "slider image 1",
     name: "Le jardin",
+    infinit: "e jardin • Le jardin • Le jardin • Le jardin • L",
+    link: "/Le_jardin",
   },
   {
     id: 5,
     src: "/img_slider_2.png",
     alt: "slider image 2",
     name: "L'usine",
+    infinit: "'usine • L'usine • L'usine • L'usine • L",
+    link: "/L_usine",
   },
   {
     id: 6,
     src: "/img_slider_3.png",
     alt: "slider image 3",
     name: "La boutique",
+    infinit: "a boutique • La boutique • La boutique • La boutique • L",
+    link: "/La_boutique",
   },
 ];
 
-// Dupliquer les images pour l'effet de boucle infinie
 const duplicatedImages = [...sliderImages, ...sliderImages];
 
 function Menu() {
   const containerRef = useRef(null);
-  // Ref pour gérer la pause lors du hover
   const isPaused = useRef(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     gsap.registerPlugin(Observer);
     let total = 0;
-    let xTo;
-    let itemValues = [];
-
     const content = containerRef.current;
+    if (!content) return;
     const cards = content.querySelectorAll(".card");
     const cardsLength = cards.length / 2;
     const half = content.clientWidth / 2;
-
-    // Fonction wrap pour l'effet de boucle infinie
     const wrap = gsap.utils.wrap(-half, 0);
-
-    // Fonction rapide pour animer la propriété x du conteneur
-    xTo = gsap.quickTo(content, "x", {
+    const xTo = gsap.quickTo(content, "x", {
       duration: 0.5,
       ease: "power3",
-      modifiers: {
-        x: gsap.utils.unitize(wrap),
-      },
+      modifiers: { x: gsap.utils.unitize(wrap) },
     });
 
-    // Génère une valeur aléatoire par carte
+    let itemValues = [];
     for (let i = 0; i < cardsLength; i++) {
       itemValues.push((Math.random() - 0.5) * 15);
     }
 
-    // Timeline pour l'animation des cartes au clic/drag
     const tl = gsap.timeline({ paused: true });
     tl.to(cards, {
       rotate: (index) => itemValues[index % cardsLength],
@@ -90,7 +125,6 @@ function Menu() {
       ease: "back.inOut(3)",
     });
 
-    // Création de l'observer pour le drag/touch
     const observer = Observer.create({
       target: content,
       type: "pointer,touch",
@@ -103,7 +137,6 @@ function Menu() {
       onStop: () => tl.reverse(),
     });
 
-    // Tick de GSAP pour l'animation automatique
     function tick(time, deltaTime) {
       if (isPaused.current) return;
       total -= deltaTime / 10;
@@ -117,23 +150,142 @@ function Menu() {
     };
   }, []);
 
+  useGSAP(() => {
+    const content = containerRef.current;
+    if (!content) return;
+    const cards = content.querySelectorAll(".card");
+
+    gsap.set(".card_name .char", { y: 165 });
+    gsap.set(".infinit_name_slider", { display: "none" });
+    gsap.set(".infinit_name_slider .char", { y: 165 });
+    gsap.to(".card_name .char", {
+      y: 0,
+      duration: 0.6,
+      ease: "power3.inOut",
+      stagger: 0.01,
+    });
+
+    cards.forEach((card) => {
+      card.addEventListener("mouseenter", () => {
+        card.hoverTimeout = setTimeout(() => {
+          const tlEnter = gsap.timeline();
+          tlEnter.to(card.querySelectorAll(".card_name .char"), {
+            y: -165,
+            duration: 0.3,
+            ease: "power3.inOut",
+            stagger: 0.01,
+          });
+          tlEnter.to(card.querySelectorAll(".card_name .char"), {
+            y: 165,
+            duration: 0,
+          });
+          tlEnter.to(card.querySelectorAll(".card_name"), {
+            display: "none",
+            duration: 0,
+          });
+          tlEnter.to(card.querySelectorAll(".infinit_name_slider"), {
+            display: "block",
+            duration: 0,
+          });
+          tlEnter.to(card.querySelectorAll(".infinit_name_slider .char"), {
+            y: 0,
+            duration: 0.3,
+            ease: "power3.inOut",
+            stagger: 0.01,
+          });
+
+          const sliderInner = card.querySelector(".slider-inner");
+          gsap.set(sliderInner, { xPercent: 0 });
+          const infiniteAnim = gsap.to(sliderInner, {
+            xPercent: -100,
+            duration: 25,
+            ease: "linear",
+            repeat: -1,
+            modifiers: {
+              xPercent: gsap.utils.wrap(-100, 0),
+            },
+          });
+          card.infiniteAnim = infiniteAnim;
+          card.hoverTimeout = null;
+        }, 10);
+      });
+
+      card.addEventListener("mouseleave", () => {
+        if (card.hoverTimeout) {
+          clearTimeout(card.hoverTimeout);
+          card.hoverTimeout = null;
+        }
+        if (card.infiniteAnim) {
+          card.infiniteAnim.kill();
+          card.infiniteAnim = null;
+        }
+        const tlLeave = gsap.timeline();
+        tlLeave.to(card.querySelectorAll(".infinit_name_slider .char"), {
+          y: -165,
+          duration: 0.3,
+          ease: "power3.inOut",
+          stagger: 0.01,
+        });
+        tlLeave.to(card.querySelectorAll(".infinit_name_slider .char"), {
+          y: 165,
+          duration: 0,
+        });
+        tlLeave.to(card.querySelectorAll(".infinit_name_slider"), {
+          display: "none",
+          duration: 0,
+        });
+        tlLeave.to(card.querySelectorAll(".card_name"), {
+          display: "block",
+          duration: 0,
+        });
+        tlLeave.to(card.querySelectorAll(".card_name .char"), {
+          y: 0,
+          duration: 0.3,
+          ease: "power3.inOut",
+          stagger: 0.01,
+        });
+      });
+    });
+  }, []);
+
   return (
     <>
       <Navbar />
+      <motion.div {...anim(slideVariants)} className="slide"></motion.div>
       <section className="menu_section">
         <div className="background_menu"></div>
         <div className="slider container" ref={containerRef}>
           {duplicatedImages.map((image, index) => (
-            <div
+            <Link
+              to={image.link}
               className="card"
               key={index}
-              onMouseEnter={() => (isPaused.current = true)}
-              onMouseLeave={() => (isPaused.current = false)}
+              onMouseEnter={() => {
+                isPaused.current = true;
+              }}
+              onMouseLeave={() => {
+                isPaused.current = false;
+              }}
             >
               <img className="slider_img" src={image.src} alt={image.alt} />
-              <h2 className="card_name">{image.name}</h2>
-            </div>
+              <span className="card_name_container">
+                <h2 className="card_name">{splitText(image.name)}</h2>
+              </span>
+              <span className="infinit_name_slider_container">
+                <h2 className="infinit_name_slider">
+                  <div className="slider-inner">
+                    <p className="text-copy">{splitText(image.infinit)}</p>
+                    <p className="text-copy">{splitText(image.infinit)}</p>
+                  </div>
+                </h2>
+              </span>
+            </Link>
           ))}
+        </div>
+
+        <div className="drag_to_use">
+          <span className="drag_tuto"></span>
+          <span className="text">Drag to navigate</span>
         </div>
       </section>
     </>

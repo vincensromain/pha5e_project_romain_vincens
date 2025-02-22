@@ -3,14 +3,14 @@ import * as THREE from "three";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import "./Image_360.scss";
+import "./Le_jardin.scss";
 
 import Navbar from "../Navbar/Navbar";
 import White_btn from "../White_btn/White_btn";
 import Yellow_btn from "../Yellow_btn/Yellow_btn";
 // import Arrow from "../Arrow/Arrow"; // Décommente si nécessaire
 
-function Image_360() {
+function Le_jardin() {
   const containerRef = useRef(null);
   const explanationTitleRef = useRef(null);
   // Références pour accéder aux conteneurs des marqueurs dans le DOM
@@ -227,4 +227,4 @@ function Image_360() {
   );
 }
 
-export default Image_360;
+export default Le_jardin;

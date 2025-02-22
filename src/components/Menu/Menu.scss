@@ -1,5 +1,20 @@
+.inner {
+  .slide {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #ffd657;
+    width: 100vw;
+    height: 100vh;
+  }
+}
 .menu_section {
   position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 
   .background_menu {
     height: 100vh;
@@ -13,12 +28,11 @@
   .slider {
     height: 100vh;
     width: max-content;
-    white-space: nowrap;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 40.77px;
-
+    position: absolute;
     user-select: none;
     cursor: grab;
 
@@ -30,7 +44,6 @@
       cursor: pointer;
       border-radius: 9px;
       background-color: #1b1b1b;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -49,13 +62,58 @@
         object-fit: cover;
         pointer-events: none;
         position: absolute;
-        z-index: -1;
-      } // Au cas où
-
-      .card_name {
-        font-size: 110px;
-        color: #ffff;
       }
+
+      .card_name_container {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        .card_name {
+          font-size: 110px;
+          font-family: "AvenirNextLTPro-Bold";
+          color: #ffff;
+        }
+      }
+
+      .infinit_name_slider_container {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        .infinit_name_slider {
+          font-size: 110px;
+          font-family: "AvenirNextLTPro-Bold";
+          color: #ffff;
+
+          .slider-inner {
+            position: relative;
+            white-space: nowrap;
+            p.text-copy {
+              display: inline-block;
+              margin: 0;
+            }
+            p.text-copy:nth-of-type(2) {
+              position: absolute;
+              left: 100%;
+              top: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .drag_to_use {
+    position: absolute;
+    bottom: 30px;
+    font-size: 16px;
+    color: #ffd657;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 13px;
+
+    .drag_tuto {
+      width: 20px;
+      height: 20px;
+      background: blue;
     }
   }
 }

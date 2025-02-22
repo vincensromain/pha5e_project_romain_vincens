@@ -5,6 +5,22 @@ import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import Logo from "../Logo/Logo";
 import Oval from "../Oval/Oval";
+import { motion } from "framer-motion";
+
+const anim = (variants) => {
+  return {
+    initial: "initial",
+    animate: "enter",
+    exit: "exit",
+    variants,
+  };
+};
+
+const slide = {
+  initial: { top: "0", duration: 18 },
+  enter: { top: "100vh", duration: 18 },
+  exit: { top: "100vh", duration: 18 },
+};
 
 const splitText = (text) => {
   return text.split("").map((char, index) => {
@@ -104,53 +120,60 @@ function Intro() {
 
   return (
     <>
-      <section className="intro_section">
-        <div className="background_intro"></div>
-        <nav className="intro_nav">
-          <a href="/">
-            <Logo />
-          </a>
-        </nav>
+      <div className="inner">
+        <motion.div {...anim(slide)} className="slide"></motion.div>
+        <motion.section className="intro_section">
+          <div className="background_intro"></div>
+          <nav className="intro_nav inside">
+            <a href="/">
+              <Logo />
+            </a>
+          </nav>
 
-        <div className="heading">
-          <div className="title_container">
-            <span className="title_1_container">
-              <h1 className="title_1">{splitText("L’Occitane")}</h1>
-            </span>
+          <div className="heading">
+            <div className="title_container">
+              <span className="title_1_container">
+                <h1 className="title_1">{splitText("L’Occitane")}</h1>
+              </span>
 
-            <span className="title_2_container">
-              <h1 className="title_2">{splitText("vous invite à Manosque")}</h1>
-            </span>
-          </div>
-          {/* <Oval /> */}
-        </div>
-
-        <div className="new_heading">
-          <div className="title_container">
-            <span className="title_1_container">
-              <h1 className="title_1">
-                {splitText("Entrez au cœur de notre")}
-              </h1>
-            </span>
-            <span className="title_2_container">
-              <h1 className="title_2">
-                {splitText("univers en visitant à 360°")}
-              </h1>
-            </span>
-            <span className="title_3_container">
-              <h1 className="title_3">{splitText("le jardin, l’usine et")}</h1>
-            </span>
-            <span className="title_4_container">
-              <h1 className="title_4">{splitText("la boutique musée.")}</h1>
-            </span>
+              <span className="title_2_container">
+                <h1 className="title_2">
+                  {splitText("vous invite à Manosque")}
+                </h1>
+              </span>
+            </div>
+            {/* <Oval /> */}
           </div>
 
-          <Link to="/Menu" className="start_experience">
-            <span className="cta_text">Entrer dans l’expérience</span>
-            <span className="arrow"></span>
-          </Link>
-        </div>
-      </section>
+          <div className="new_heading">
+            <div className="title_container">
+              <span className="title_1_container">
+                <h1 className="title_1">
+                  {splitText("Entrez au cœur de notre")}
+                </h1>
+              </span>
+              <span className="title_2_container">
+                <h1 className="title_2">
+                  {splitText("univers en visitant à 360°")}
+                </h1>
+              </span>
+              <span className="title_3_container">
+                <h1 className="title_3">
+                  {splitText("le jardin, l’usine et")}
+                </h1>
+              </span>
+              <span className="title_4_container">
+                <h1 className="title_4">{splitText("la boutique musée.")}</h1>
+              </span>
+            </div>
+
+            <Link to="/Menu" className="start_experience">
+              <span className="cta_text">Entrer dans l’expérience</span>
+              <span className="arrow"></span>
+            </Link>
+          </div>
+        </motion.section>
+      </div>
     </>
   );
 }

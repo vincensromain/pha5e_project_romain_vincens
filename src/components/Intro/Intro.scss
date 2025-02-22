@@ -14,8 +14,12 @@
   }
 
   .intro_nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
-    top: 20px;
+    top: 28px;
     left: 50%;
     transform: translateX(-50%);
   }
