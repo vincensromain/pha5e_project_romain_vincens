@@ -53,7 +53,7 @@ const sliderImages = [
     alt: "slider image 2",
     name: "L'usine",
     infinit: "'usine • L'usine • L'usine • L'usine • L",
-    link: "/L_usine",
+    link: "/Le_jardin",
   },
   {
     id: 3,
@@ -61,7 +61,7 @@ const sliderImages = [
     alt: "slider image 3",
     name: "La boutique",
     infinit: "a boutique • La boutique • La boutique • La boutique • L",
-    link: "/La_boutique",
+    link: "/Le_jardin",
   },
   {
     id: 4,
@@ -77,7 +77,7 @@ const sliderImages = [
     alt: "slider image 2",
     name: "L'usine",
     infinit: "'usine • L'usine • L'usine • L'usine • L",
-    link: "/L_usine",
+    link: "/Le_jardin",
   },
   {
     id: 6,
@@ -85,7 +85,7 @@ const sliderImages = [
     alt: "slider image 3",
     name: "La boutique",
     infinit: "a boutique • La boutique • La boutique • La boutique • L",
-    link: "/La_boutique",
+    link: "/Le_jardin",
   },
 ];
 

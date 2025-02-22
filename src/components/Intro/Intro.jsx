@@ -102,6 +102,7 @@ function Intro() {
     // Nouvelle timeline pour .new_heading, initialisée en pause
     const NewHeading_tl = gsap.timeline({ paused: true });
     gsap.set(".new_heading", { display: "none" });
+    gsap.set(".start_experience", { y: 165 });
     gsap.set(".new_heading [class^='title_'] .char", { y: 165 });
 
     NewHeading_tl.to(".new_heading", {
@@ -110,12 +111,22 @@ function Intro() {
       ease: "power3.inOut",
     });
 
-    NewHeading_tl.to(".new_heading [class^='title_'] .char", {
-      y: 15,
-      duration: 1,
+    NewHeading_tl.to(".start_experience", {
+      y: 0,
+      duration: 1.3,
       ease: "power3.inOut",
-      stagger: 0.008,
     });
+
+    NewHeading_tl.to(
+      ".new_heading [class^='title_'] .char",
+      {
+        y: 15,
+        duration: 1,
+        ease: "power3.inOut",
+        stagger: 0.008,
+      },
+      "<"
+    );
   }, []);
 
   return (
@@ -167,10 +178,12 @@ function Intro() {
               </span>
             </div>
 
-            <Link to="/Menu" className="start_experience">
-              <span className="cta_text">Entrer dans l’expérience</span>
-              <span className="arrow"></span>
-            </Link>
+            <div className="cta_container">
+              <Link to="/Menu" className="start_experience">
+                <span className="cta_text">Entrer dans l’expérience</span>
+                <span className="arrow"></span>
+              </Link>
+            </div>
           </div>
         </motion.section>
       </div>

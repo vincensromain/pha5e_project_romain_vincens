@@ -4,11 +4,11 @@ import { gsap } from "gsap";
 import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import "./Le_jardin.scss";
+import "./Le_jardin_vue_3.scss";
 import Navbar from "../Navbar/Navbar";
 import YellowBtn from "../Yellow_btn/Yellow_btn";
 
-function LeJardin() {
+function Le_jardin_vue_3() {
   const containerRef = useRef(null);
   const markerRef = useRef(null);
   const marker2Ref = useRef(null);
@@ -161,7 +161,7 @@ function LeJardin() {
       rotateSpeed: 0.5,
     });
     controls.target.set(0, 0, 0);
-    const texture = new THREE.TextureLoader().load("/img_360_2.jpg");
+    const texture = new THREE.TextureLoader().load("/img_360_3.jpg");
     const geometry = new THREE.SphereGeometry(500, 60, 40);
     geometry.scale(-1, 1, 1);
     const sphere = new THREE.Mesh(
@@ -229,7 +229,7 @@ function LeJardin() {
     <>
       <Navbar />
       <section className="hero" ref={containerRef}>
-        <Link to="/Le_jardin_vue_2">
+        <Link to="/Le_jardin_vue_1">
           <YellowBtn />
         </Link>
         <div className="explanation">
@@ -249,4 +249,4 @@ function LeJardin() {
   );
 }
 
-export default LeJardin;
+export default Le_jardin_vue_3;
