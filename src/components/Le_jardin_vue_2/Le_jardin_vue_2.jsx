@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { gsap } from "gsap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import "./Le_jardin_vue_2.scss";
+import transition from "../Transition";
 import Navbar from "../Navbar/Navbar";
 import YellowBtn from "../Yellow_btn/Yellow_btn";
 
@@ -12,6 +13,7 @@ function Le_jardin_vue_2() {
   const containerRef = useRef(null);
   const markerRef = useRef(null);
   const marker2Ref = useRef(null);
+  const navigate = useNavigate();
 
   const createMarker = (markerClass = "", innerClass = "inner_marker") => {
     const marker = document.createElement("div");
@@ -128,6 +130,7 @@ function Le_jardin_vue_2() {
     const canvas = document.createElement("canvas");
     canvas.className = "web-gl";
     container.appendChild(canvas);
+
     const { marker: marker1, innerMarker: innerMarker1 } = createMarker();
     const { marker: marker2, innerMarker: innerMarker2 } = createMarker(
       "marker2",
@@ -139,6 +142,15 @@ function Le_jardin_vue_2() {
     marker2Ref.current = marker2;
     addMagneticEffects(marker1, innerMarker1);
     addMagneticEffects(marker2, innerMarker2);
+
+    // Ajout des liens sur les markers :
+    marker1.addEventListener("click", () => {
+      navigate("/Article_3");
+    });
+    marker2.addEventListener("click", () => {
+      navigate("/Article_4");
+    });
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       70,
@@ -195,7 +207,7 @@ function Le_jardin_vue_2() {
       container.removeChild(marker1);
       container.removeChild(marker2);
     };
-  }, []);
+  }, [navigate]);
 
   useGSAP(() => {
     gsap.set(".explanation_title", { y: 50 });
@@ -232,21 +244,9 @@ function Le_jardin_vue_2() {
         <Link to="/Le_jardin_vue_3">
           <YellowBtn />
         </Link>
-        <div className="explanation">
-          <div className="explanation_info">
-            <span className="drag_anim" />
-            <span className="title_container">
-              <h2 className="explanation_title">Drag in 360° to navigate</h2>
-            </span>
-            <span className="cta_explanation" onClick={handleCTA}>
-              <span className="text">got it !</span>
-              <span className="arrow_dont_forget" />
-            </span>
-          </div>
-        </div>
       </section>
     </>
   );
 }
 
-export default Le_jardin_vue_2;
+export default transition(Le_jardin_vue_2);

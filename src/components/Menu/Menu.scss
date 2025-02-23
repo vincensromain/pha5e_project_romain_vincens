@@ -102,8 +102,11 @@
 
     .drag_tuto {
       width: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       height: 20px;
-      background: blue;
     }
   }
 }

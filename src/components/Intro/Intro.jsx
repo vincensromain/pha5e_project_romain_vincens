@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import Logo from "../Logo/Logo";
 import Oval from "../Oval/Oval";
+import transition from "../Transition";
+import Arrow from "../Arrow/Arrow";
 
 const splitText = (text) => {
   return text.split("").map((char, index) => {
@@ -23,7 +25,6 @@ const splitText = (text) => {
 
 function Intro() {
   useGSAP(() => {
-    // Ciblage uniquement des éléments dans le conteneur .heading
     gsap.set(".heading .title_1 .char", { y: 165 });
     gsap.set(".heading .title_2 .char", { y: 155 });
 
@@ -39,19 +40,17 @@ function Intro() {
       },
       0
     );
-
     Heading_tl.to(
       ".heading .title_2 .char",
       {
         y: 15,
         duration: 1,
         ease: "power3.inOut",
-        stagger: 0.02,
+        stagger: { each: 0.02, from: "end" },
       },
       0
     );
 
-    // Animation après un délai
     Heading_tl.to(
       ".heading .title_1 .char",
       {
@@ -62,32 +61,32 @@ function Intro() {
       },
       "+=1"
     );
-
     Heading_tl.to(
       ".heading .title_2 .char",
       {
         y: -160,
         duration: 0.5,
         ease: "power3.inOut",
-        stagger: 0.02,
+        stagger: { each: 0.02, from: "end" },
       },
       "<"
     );
 
-    // Une fois l'animation terminée, supprimer le conteneur ".heading" et démarrer new_heading_tl
     Heading_tl.call(() => {
       const heading = document.querySelector(".heading");
       if (heading) {
         heading.remove();
       }
-      NewHeading_tl.play(); // démarre la timeline de new_heading
+      NewHeading_tl.play();
     });
 
-    // Nouvelle timeline pour .new_heading, initialisée en pause
     const NewHeading_tl = gsap.timeline({ paused: true });
     gsap.set(".new_heading", { display: "none" });
     gsap.set(".start_experience", { y: 165 });
-    gsap.set(".new_heading [class^='title_'] .char", { y: 165 });
+    gsap.set(".new_heading .title_1 .char", { y: 165 });
+    gsap.set(".new_heading .title_2 .char", { y: 165 });
+    gsap.set(".new_heading .title_3 .char", { y: 165 });
+    gsap.set(".new_heading .title_4 .char", { y: 165 });
 
     NewHeading_tl.to(".new_heading", {
       display: "flex",
@@ -102,12 +101,45 @@ function Intro() {
     });
 
     NewHeading_tl.to(
-      ".new_heading [class^='title_'] .char",
+      ".new_heading .title_1 .char",
       {
         y: 15,
         duration: 1,
         ease: "power3.inOut",
         stagger: 0.008,
+      },
+      "<"
+    );
+
+    NewHeading_tl.to(
+      ".new_heading .title_2 .char",
+      {
+        y: 15,
+        duration: 1,
+        ease: "power3.inOut",
+        stagger: { each: 0.008, from: "end" },
+      },
+      "<"
+    );
+
+    NewHeading_tl.to(
+      ".new_heading .title_3 .char",
+      {
+        y: 15,
+        duration: 1,
+        ease: "power3.inOut",
+        stagger: 0.008,
+      },
+      "<"
+    );
+
+    NewHeading_tl.to(
+      ".new_heading .title_4 .char",
+      {
+        y: 15,
+        duration: 1,
+        ease: "power3.inOut",
+        stagger: { each: 0.008, from: "end" },
       },
       "<"
     );
@@ -125,18 +157,17 @@ function Intro() {
           </nav>
 
           <div className="heading">
+            <Oval />
             <div className="title_container">
               <span className="title_1_container">
                 <h1 className="title_1">{splitText("L’Occitane")}</h1>
               </span>
-
               <span className="title_2_container">
                 <h1 className="title_2">
                   {splitText("vous invite à Manosque")}
                 </h1>
               </span>
             </div>
-            {/* <Oval /> */}
           </div>
 
           <div className="new_heading">
@@ -164,7 +195,9 @@ function Intro() {
             <div className="cta_container">
               <Link to="/Menu" className="start_experience">
                 <span className="cta_text">Entrer dans l’expérience</span>
-                <span className="arrow"></span>
+                <span className="arrow">
+                  <Arrow />
+                </span>
               </Link>
             </div>
           </div>
@@ -174,4 +207,4 @@ function Intro() {
   );
 }
 
-export default Intro;
+export default transition(Intro);

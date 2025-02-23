@@ -76,16 +76,22 @@
           .cta_text {
             color: #1b1b1b;
           }
+
+          .arrow_icon {
+            path {
+              stroke: #1b1b1b;
+            }
+          }
         }
         .cta_text {
           color: #ffd657;
           font-size: 16px;
           text-transform: uppercase;
           transition: 0.3s ease;
+          padding-top: 8px;
         }
 
         .arrow {
-          background-color: red;
           width: 10px;
           height: 10px;
         }

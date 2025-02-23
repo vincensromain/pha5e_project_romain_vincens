@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
-import "./Oval.scss";
+import "./Oval_article.scss";
 
-function Oval() {
+function Oval_article() {
   const pathRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -15,32 +15,20 @@ function Oval() {
         visibility: "hidden",
       });
 
-      // Création d'une timeline pour enchaîner les animations
-      const tl = gsap.timeline();
-
-      // Animation d'apparition
-      tl.to(path, {
+      // Animation d'apparition une seule fois
+      gsap.to(path, {
         visibility: "visible",
         strokeDashoffset: 0,
         duration: 0.6,
         ease: "power2.out",
         delay: 0.8,
-      })
-        .to(path, {
-          strokeDashoffset: length,
-          duration: 0.6,
-          ease: "power2.in",
-          delay: 0.8,
-        })
-        .set(path, {
-          visibility: "hidden",
-        });
+      });
     }
   }, []);
 
   return (
     <svg
-      className="oval"
+      className="oval_article"
       width="460"
       height="200"
       viewBox="0 0 280 120"
@@ -58,4 +46,4 @@ function Oval() {
   );
 }
 
-export default Oval;
+export default Oval_article;

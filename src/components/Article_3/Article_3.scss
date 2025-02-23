@@ -1,0 +1,116 @@
+.article {
+  width: 100vw;
+  position: relative;
+
+  .background_article {
+    width: 100vw;
+
+    .img_bg {
+      height: 1064px;
+      background: url("/article_bg.png") no-repeat center center;
+      background-size: cover;
+    }
+
+    .colored_bg {
+      height: 495px;
+    }
+  }
+
+  .front_article {
+    background-color: white;
+    max-width: 1196px;
+    width: 100%;
+    top: 122px;
+    transform: translateX(-50%);
+    left: 50%;
+    position: absolute;
+    z-index: 2;
+    box-shadow: 0 0 30px 0 rgba(6, 5, 36, 0.1);
+    .closed_btn {
+      height: 24px;
+      width: 24px;
+      right: 30px;
+      top: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      cursor: pointer;
+
+      .closed_container {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .closed_line {
+        position: absolute;
+        width: 24px;
+        height: 3px;
+        background: #1b1b1b;
+      }
+
+      .line_1 {
+        rotate: 45deg;
+      }
+
+      .line_2 {
+        rotate: -45deg;
+      }
+    }
+
+    .article_img {
+      height: 672px;
+      background: url("/article_img.png") no-repeat center center;
+      background-size: cover;
+    }
+
+    .slider_article {
+      overflow: hidden;
+
+      .title_article {
+        font-size: 80px;
+        padding-top: 41px;
+        width: 800vw;
+        display: flex;
+        align-items: center;
+
+        h2 {
+          font-family: "AvenirNextLTPro-Bold";
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+      }
+    }
+
+    .about_article {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 85px;
+      gap: 56px;
+      margin-bottom: 64px;
+
+      .about_title {
+        width: 30%;
+        font-size: 40px;
+      }
+
+      .about_paragraph {
+        max-width: 527px;
+        font-size: 23px;
+        line-height: 33.6px;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+
+        .strong {
+          .char {
+            font-family: "AvenirNextLTPro-Bold";
+          }
+        }
+      }
+    }
+  }
+}

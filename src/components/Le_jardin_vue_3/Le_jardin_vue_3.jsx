@@ -1,17 +1,19 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { gsap } from "gsap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import "./Le_jardin_vue_3.scss";
 import Navbar from "../Navbar/Navbar";
+import transition from "../Transition";
 import YellowBtn from "../Yellow_btn/Yellow_btn";
 
 function Le_jardin_vue_3() {
   const containerRef = useRef(null);
   const markerRef = useRef(null);
   const marker2Ref = useRef(null);
+  const navigate = useNavigate();
 
   const createMarker = (markerClass = "", innerClass = "inner_marker") => {
     const marker = document.createElement("div");
@@ -128,17 +130,30 @@ function Le_jardin_vue_3() {
     const canvas = document.createElement("canvas");
     canvas.className = "web-gl";
     container.appendChild(canvas);
+
     const { marker: marker1, innerMarker: innerMarker1 } = createMarker();
     const { marker: marker2, innerMarker: innerMarker2 } = createMarker(
       "marker2",
       "inner_marker2"
     );
+
     container.appendChild(marker1);
     container.appendChild(marker2);
+
     markerRef.current = marker1;
     marker2Ref.current = marker2;
+
     addMagneticEffects(marker1, innerMarker1);
     addMagneticEffects(marker2, innerMarker2);
+
+    // Ajout des liens sur les markers
+    marker1.addEventListener("click", () => {
+      navigate("/Article_5");
+    });
+    marker2.addEventListener("click", () => {
+      navigate("/Article_6");
+    });
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       70,
@@ -148,10 +163,12 @@ function Le_jardin_vue_3() {
     );
     camera.position.set(0, 0, 0.1);
     scene.add(camera);
+
     const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio || 1);
     renderer.setClearColor(0x000000, 1);
+
     const controls = new OrbitControls(camera, renderer.domElement);
     Object.assign(controls, {
       enableZoom: true,
@@ -161,6 +178,7 @@ function Le_jardin_vue_3() {
       rotateSpeed: 0.5,
     });
     controls.target.set(0, 0, 0);
+
     const texture = new THREE.TextureLoader().load("/img_360_3.jpg");
     const geometry = new THREE.SphereGeometry(500, 60, 40);
     geometry.scale(-1, 1, 1);
@@ -169,8 +187,10 @@ function Le_jardin_vue_3() {
       new THREE.MeshBasicMaterial({ map: texture })
     );
     scene.add(sphere);
+
     const markerPosition1 = new THREE.Vector3(-190, -40, -100);
     const markerPosition2 = new THREE.Vector3(70, 20, -100);
+
     let animationFrameId;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
@@ -180,6 +200,7 @@ function Le_jardin_vue_3() {
       renderer.render(scene, camera);
     };
     animate();
+
     const onWindowResize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
@@ -188,6 +209,7 @@ function Le_jardin_vue_3() {
       renderer.setSize(width, height);
     };
     window.addEventListener("resize", onWindowResize);
+
     return () => {
       window.removeEventListener("resize", onWindowResize);
       cancelAnimationFrame(animationFrameId);
@@ -195,7 +217,7 @@ function Le_jardin_vue_3() {
       container.removeChild(marker1);
       container.removeChild(marker2);
     };
-  }, []);
+  }, [navigate]);
 
   useGSAP(() => {
     gsap.set(".explanation_title", { y: 50 });
@@ -232,21 +254,9 @@ function Le_jardin_vue_3() {
         <Link to="/Le_jardin_vue_1">
           <YellowBtn />
         </Link>
-        <div className="explanation">
-          <div className="explanation_info">
-            <span className="drag_anim" />
-            <span className="title_container">
-              <h2 className="explanation_title">Drag in 360° to navigate</h2>
-            </span>
-            <span className="cta_explanation" onClick={handleCTA}>
-              <span className="text">got it !</span>
-              <span className="arrow_dont_forget" />
-            </span>
-          </div>
-        </div>
       </section>
     </>
   );
 }
 
-export default Le_jardin_vue_3;
+export default transition(Le_jardin_vue_3);

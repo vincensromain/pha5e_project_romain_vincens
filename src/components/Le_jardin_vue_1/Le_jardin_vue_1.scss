@@ -22,7 +22,7 @@ canvas {
     .drag_anim {
       width: 103.18px;
       height: 22.57px;
-      background: blue;
+      background-color: transparent;
     }
 
     .title_container {
@@ -52,8 +52,15 @@ canvas {
         .text {
           color: #1b1b1b;
         }
+
+        .arrow_icon {
+          path {
+            stroke: #1b1b1b;
+          }
+        }
       }
       .text {
+        padding-top: 8px;
         transition: 0.3s ease;
         color: #ffd657;
         font-size: 16px;
@@ -63,7 +70,6 @@ canvas {
       .arrow_dont_forget {
         width: 10px;
         height: 10px;
-        background-color: red;
       }
     }
   }

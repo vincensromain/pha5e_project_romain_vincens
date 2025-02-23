@@ -26,6 +26,42 @@
     position: absolute;
     z-index: 2;
     box-shadow: 0 0 30px 0 rgba(6, 5, 36, 0.1);
+    .closed_btn {
+      height: 24px;
+      width: 24px;
+      right: 30px;
+      top: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      cursor: pointer;
+
+      .closed_container {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .closed_line {
+        position: absolute;
+        width: 24px;
+        height: 3px;
+        background: #1b1b1b;
+      }
+
+      .line_1 {
+        rotate: 45deg;
+      }
+
+      .line_2 {
+        rotate: -45deg;
+      }
+    }
+
     .article_img {
       height: 672px;
       background: url("/article_img.png") no-repeat center center;
@@ -41,6 +77,11 @@
         width: 800vw;
         display: flex;
         align-items: center;
+
+        h2 {
+          font-family: "AvenirNextLTPro-Bold";
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
       }
     }
 
@@ -62,6 +103,13 @@
         max-width: 527px;
         font-size: 23px;
         line-height: 33.6px;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+
+        .strong {
+          .char {
+            font-family: "AvenirNextLTPro-Bold";
+          }
+        }
       }
     }
   }

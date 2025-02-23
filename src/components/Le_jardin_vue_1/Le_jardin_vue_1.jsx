@@ -4,9 +4,12 @@ import { gsap } from "gsap";
 import { Link, useNavigate } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import "./Le_jardin.scss";
+import "./Le_jardin_vue_1.scss";
+import transition from "../Transition";
 import Navbar from "../Navbar/Navbar";
 import YellowBtn from "../Yellow_btn/Yellow_btn";
+import Drag_white from "../Drag_white/Drag_white";
+import Arrow from "../Arrow/Arrow";
 
 function LeJardin() {
   const containerRef = useRef(null);
@@ -27,6 +30,7 @@ function LeJardin() {
       justifyContent: "center",
       alignItems: "center",
       cursor: "pointer",
+      scale: 0,
     });
     marker.setAttribute("data-magnetic-strength", "60");
     marker.setAttribute("data-magnetic-strength-inner", "35");
@@ -143,11 +147,11 @@ function LeJardin() {
 
     // Ajout du click pour naviguer vers Article_lavande
     marker1.addEventListener("click", () => {
-      navigate("/Article_lavande");
+      navigate("/Article_1");
     });
 
     marker2.addEventListener("click", () => {
-      navigate("/Article_lavande");
+      navigate("/Article_2");
     });
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -208,7 +212,6 @@ function LeJardin() {
   }, [navigate]);
 
   useGSAP(() => {
-    gsap.set(".next_view", { display: "none", opacity: 0 });
     gsap.set(".explanation_title", { y: 50 });
     gsap.to(".explanation_title", {
       y: 0,
@@ -223,6 +226,9 @@ function LeJardin() {
       duration: 1.2,
       ease: "power4.inOut",
     });
+    gsap.to(".arrow_icon path", {
+      stroke: "#1B1B1B",
+    });
     gsap.to(".cta_explanation", { background: "#ffd657" });
     gsap.to(".text", { color: "#1B1B1B" });
     gsap.set(".explanation", {
@@ -234,12 +240,11 @@ function LeJardin() {
       delay: 1,
       ease: "power3.inOut",
     });
-    gsap.to(".next_view", {
+
+    gsap.to(".marker", {
+      scale: 1,
       delay: 1.5,
-      opacity: 1,
-      duration: 0.5,
       ease: "power3.inOut",
-      display: "flex",
     });
   };
 
@@ -247,18 +252,25 @@ function LeJardin() {
     <>
       <Navbar />
       <section className="hero" ref={containerRef}>
-        <Link to="/Le_jardin_vue_2" className="next_view">
-          <YellowBtn />
-        </Link>
+        <div className="next_view">
+          <Link to="/Le_jardin_vue_2">
+            <YellowBtn />
+          </Link>
+        </div>
+
         <div className="explanation">
           <div className="explanation_info">
-            <span className="drag_anim" />
+            <span className="drag_anim">
+              <Drag_white />
+            </span>
             <span className="title_container">
               <h2 className="explanation_title">Drag in 360° to navigate</h2>
             </span>
             <span className="cta_explanation" onClick={handleCTA}>
               <span className="text">got it !</span>
-              <span className="arrow_dont_forget" />
+              <span className="arrow_dont_forget">
+                <Arrow />
+              </span>
             </span>
           </div>
         </div>
@@ -267,4 +279,4 @@ function LeJardin() {
   );
 }
 
-export default LeJardin;
+export default transition(LeJardin);
