@@ -6,7 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import transition from "../Transition";
-import Drag_Yellow from "../Drag_Yellow/Drag_Yellow";
+import DragYellow from "../Drag_Yellow/Drag_Yellow";
 
 const splitText = (text) =>
   text.split("").map((char, index) => {
@@ -269,7 +269,7 @@ function Menu() {
 
         <div className="drag_to_use">
           <span className="drag_tuto">
-            <Drag_Yellow />
+            <DragYellow />
           </span>
           <span className="text">Drag to navigate</span>
         </div>
