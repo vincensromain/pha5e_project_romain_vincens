@@ -17,7 +17,6 @@ function White_btn() {
       parseFloat(magnet.getAttribute("data-magnetic-strength-inner")) ||
       strength;
 
-    // Définition des fonctions pour l'effet magnétique
     function moveMagnet(event) {
       gsap.killTweensOf(magnet);
       if (innerTarget) gsap.killTweensOf(innerTarget);
@@ -78,7 +77,6 @@ function White_btn() {
       }
     }
 
-    // Nouvelles fonctions pour l'agrandissement sur press
     function enlargeInner() {
       if (innerTarget) {
         gsap.to(innerTarget, {
@@ -100,8 +98,6 @@ function White_btn() {
         });
       }
     }
-
-    // Ajout des écouteurs d'évènements
     magnet.addEventListener("mousemove", moveMagnet);
     magnet.addEventListener("mouseleave", resetMagnet);
     magnet.addEventListener("mousedown", enlargeInner);

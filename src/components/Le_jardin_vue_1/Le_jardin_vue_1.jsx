@@ -144,8 +144,6 @@ function LeJardin() {
     marker2Ref.current = marker2;
     addMagneticEffects(marker1, innerMarker1);
     addMagneticEffects(marker2, innerMarker2);
-
-    // Ajout du click pour naviguer vers Article_lavande
     marker1.addEventListener("click", () => {
       navigate("/Article_1");
     });

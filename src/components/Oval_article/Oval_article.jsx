@@ -8,14 +8,13 @@ function Oval_article() {
   useLayoutEffect(() => {
     const path = pathRef.current;
     if (path) {
-      const length = path.getTotalLength(); // Longueur totale du chemin
+      const length = path.getTotalLength();
       gsap.set(path, {
         strokeDasharray: length,
         strokeDashoffset: length,
         visibility: "hidden",
       });
 
-      // Animation d'apparition une seule fois
       gsap.to(path, {
         visibility: "visible",
         strokeDashoffset: 0,

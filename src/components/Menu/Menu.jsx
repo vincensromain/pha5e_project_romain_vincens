@@ -21,7 +21,6 @@ const splitText = (text) =>
       </span>
     );
   });
-
 const sliderImages = [
   {
     id: 1,

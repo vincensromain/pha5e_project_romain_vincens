@@ -16,7 +16,6 @@ function Yellow_btn() {
     const innerStrength =
       parseFloat(magnet.getAttribute("data-magnetic-strength-inner")) || 25;
 
-    // Déplacement magnétique
     function moveMagnet(event) {
       gsap.killTweensOf(magnet);
       if (innerTarget) gsap.killTweensOf(innerTarget);
@@ -54,7 +53,6 @@ function Yellow_btn() {
       }
     }
 
-    // Réinitialisation de la position magnétique
     function resetMagnet() {
       gsap.killTweensOf(magnet);
       if (innerTarget) gsap.killTweensOf(innerTarget);
@@ -77,8 +75,6 @@ function Yellow_btn() {
         });
       }
     }
-
-    // Agrandissement de l'élément intérieur au press
     function enlargeInner() {
       if (innerTarget) {
         gsap.to(innerTarget, {
@@ -90,7 +86,6 @@ function Yellow_btn() {
       }
     }
 
-    // Retour à la taille initiale
     function resetInner() {
       if (innerTarget) {
         gsap.to(innerTarget, {
@@ -102,7 +97,6 @@ function Yellow_btn() {
       }
     }
 
-    // Gestion commune lors du départ du curseur
     function handleMouseLeave() {
       resetMagnet();
       resetInner();

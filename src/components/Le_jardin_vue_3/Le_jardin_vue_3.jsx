@@ -145,8 +145,6 @@ function Le_jardin_vue_3() {
 
     addMagneticEffects(marker1, innerMarker1);
     addMagneticEffects(marker2, innerMarker2);
-
-    // Ajout des liens sur les markers
     marker1.addEventListener("click", () => {
       navigate("/Article_5");
     });

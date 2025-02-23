@@ -142,8 +142,6 @@ function Le_jardin_vue_2() {
     marker2Ref.current = marker2;
     addMagneticEffects(marker1, innerMarker1);
     addMagneticEffects(marker2, innerMarker2);
-
-    // Ajout des liens sur les markers :
     marker1.addEventListener("click", () => {
       navigate("/Article_3");
     });

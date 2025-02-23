@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import "./Article_4.scss"; // Fichier de style pour Article_4
+import "./Article_4.scss";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import transition from "../Transition";
