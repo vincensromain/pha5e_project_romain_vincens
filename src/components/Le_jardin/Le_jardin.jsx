@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { gsap } from "gsap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import "./Le_jardin.scss";
@@ -12,6 +12,7 @@ function LeJardin() {
   const containerRef = useRef(null);
   const markerRef = useRef(null);
   const marker2Ref = useRef(null);
+  const navigate = useNavigate();
 
   const createMarker = (markerClass = "", innerClass = "inner_marker") => {
     const marker = document.createElement("div");
@@ -120,7 +121,7 @@ function LeJardin() {
     const y = ((-pos.y + 1) / 2) * window.innerHeight;
     marker.style.left = `${x - 25}px`;
     marker.style.top = `${y - 25}px`;
-    marker.style.display = pos.z > 1 ? "none" : "block";
+    marker.style.display = pos.z > 1 ? "none" : "flex";
   };
 
   useEffect(() => {
@@ -139,6 +140,15 @@ function LeJardin() {
     marker2Ref.current = marker2;
     addMagneticEffects(marker1, innerMarker1);
     addMagneticEffects(marker2, innerMarker2);
+
+    // Ajout du click pour naviguer vers Article_lavande
+    marker1.addEventListener("click", () => {
+      navigate("/Article_lavande");
+    });
+
+    marker2.addEventListener("click", () => {
+      navigate("/Article_lavande");
+    });
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       70,
@@ -195,9 +205,10 @@ function LeJardin() {
       container.removeChild(marker1);
       container.removeChild(marker2);
     };
-  }, []);
+  }, [navigate]);
 
   useGSAP(() => {
+    gsap.set(".next_view", { display: "none", opacity: 0 });
     gsap.set(".explanation_title", { y: 50 });
     gsap.to(".explanation_title", {
       y: 0,
@@ -223,13 +234,20 @@ function LeJardin() {
       delay: 1,
       ease: "power3.inOut",
     });
+    gsap.to(".next_view", {
+      delay: 1.5,
+      opacity: 1,
+      duration: 0.5,
+      ease: "power3.inOut",
+      display: "flex",
+    });
   };
 
   return (
     <>
       <Navbar />
       <section className="hero" ref={containerRef}>
-        <Link to="/Le_jardin_vue_2">
+        <Link to="/Le_jardin_vue_2" className="next_view">
           <YellowBtn />
         </Link>
         <div className="explanation">

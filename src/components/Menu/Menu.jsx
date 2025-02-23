@@ -5,24 +5,6 @@ import "./Menu.scss";
 import { useGSAP } from "@gsap/react";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
-import { motion } from "framer-motion";
-
-const slideVariants = {
-  initial: { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" },
-  animate: {
-    clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
-    transition: { duration: 0.8 },
-  },
-};
-
-const anim = (variants) => {
-  return {
-    initial: "initial",
-    animate: "animate",
-    exit: "animate",
-    variants,
-  };
-};
 
 const splitText = (text) =>
   text.split("").map((char, index) => {
@@ -45,7 +27,7 @@ const sliderImages = [
     alt: "slider image 1",
     name: "Le jardin",
     infinit: "Le jardin • Le jardin • Le jardin • Le jardin • ",
-    link: "/Le_jardin",
+    link: "/Le_jardin_vue_1",
   },
   {
     id: 2,
@@ -53,7 +35,7 @@ const sliderImages = [
     alt: "slider image 2",
     name: "L'usine",
     infinit: "'usine • L'usine • L'usine • L'usine • L",
-    link: "/Le_jardin",
+    link: "/Le_jardin_vue_1",
   },
   {
     id: 3,
@@ -61,7 +43,7 @@ const sliderImages = [
     alt: "slider image 3",
     name: "La boutique",
     infinit: "a boutique • La boutique • La boutique • La boutique • L",
-    link: "/Le_jardin",
+    link: "/Le_jardin_vue_1",
   },
   {
     id: 4,
@@ -69,7 +51,7 @@ const sliderImages = [
     alt: "slider image 1",
     name: "Le jardin",
     infinit: "e jardin • Le jardin • Le jardin • Le jardin • L",
-    link: "/Le_jardin",
+    link: "/Le_jardin_vue_1",
   },
   {
     id: 5,
@@ -77,7 +59,7 @@ const sliderImages = [
     alt: "slider image 2",
     name: "L'usine",
     infinit: "'usine • L'usine • L'usine • L'usine • L",
-    link: "/Le_jardin",
+    link: "/Le_jardin_vue_1",
   },
   {
     id: 6,
@@ -85,7 +67,7 @@ const sliderImages = [
     alt: "slider image 3",
     name: "La boutique",
     infinit: "a boutique • La boutique • La boutique • La boutique • L",
-    link: "/Le_jardin",
+    link: "/Le_jardin_vue_1",
   },
 ];
 
@@ -251,7 +233,7 @@ function Menu() {
   return (
     <>
       <Navbar />
-      <motion.div {...anim(slideVariants)} className="slide"></motion.div>
+      <div className="slide"></div>
       <section className="menu_section">
         <div className="background_menu"></div>
         <div className="slider container" ref={containerRef}>

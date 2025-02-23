@@ -5,22 +5,6 @@ import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import Logo from "../Logo/Logo";
 import Oval from "../Oval/Oval";
-import { motion } from "framer-motion";
-
-const anim = (variants) => {
-  return {
-    initial: "initial",
-    animate: "enter",
-    exit: "exit",
-    variants,
-  };
-};
-
-const slide = {
-  initial: { top: "0", duration: 18 },
-  enter: { top: "100vh", duration: 18 },
-  exit: { top: "100vh", duration: 18 },
-};
 
 const splitText = (text) => {
   return text.split("").map((char, index) => {
@@ -132,8 +116,7 @@ function Intro() {
   return (
     <>
       <div className="inner">
-        <motion.div {...anim(slide)} className="slide"></motion.div>
-        <motion.section className="intro_section">
+        <section className="intro_section">
           <div className="background_intro"></div>
           <nav className="intro_nav inside">
             <a href="/">
@@ -185,7 +168,7 @@ function Intro() {
               </Link>
             </div>
           </div>
-        </motion.section>
+        </section>
       </div>
     </>
   );

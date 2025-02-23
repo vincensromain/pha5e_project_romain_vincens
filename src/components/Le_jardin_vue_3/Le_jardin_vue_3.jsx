@@ -120,7 +120,7 @@ function Le_jardin_vue_3() {
     const y = ((-pos.y + 1) / 2) * window.innerHeight;
     marker.style.left = `${x - 25}px`;
     marker.style.top = `${y - 25}px`;
-    marker.style.display = pos.z > 1 ? "none" : "block";
+    marker.style.display = pos.z > 1 ? "none" : "flex";
   };
 
   useEffect(() => {
